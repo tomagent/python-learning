@@ -1,0 +1,62 @@
+import ch1text
+
+# Count the sentences in the text
+def count_sentences(text):
+    count = 0
+
+    terminals = '.;?!' # Use this characters to count the num of sentences
+    for char in text:
+        if char in terminals:
+            count += 1
+
+    return count
+
+# Count the number of syllables
+def count_syllables(words):
+    count = 0
+    
+    for word in words: #Iterate through all the words
+        word_count = count_syllables_in_word(word) # Get the num of syllables of the current word
+        count += word_count # Add the syllables of the current word to the counter
+
+    return count
+
+# Count the sylalbles in each word
+def count_syllables_in_word(word):
+    count = 0
+
+    # 1. If the length of the word is less than 3, then it's only one syllable 
+    if len(word) <= 3: 
+        return 1
+    
+    # 2. Count number of vowels that represents syllables
+    vowels = "aeiouAEIOU" # Variable that holds all the vowels
+    prev_char_was_vowel = False
+
+    for char in word: # Iterate through each char of the word
+        if char in vowels: # If the current character matches any of the characters is a vowel
+            if not prev_char_was_vowel: # If the current character is a vowel and the previous wasn't
+                count = count + 1 # Count it as a syllable
+            prev_char_was_vowel = True
+        else:
+            prev_char_was_vowel = False   
+
+    return count    
+
+# Make the final computation of the readability
+def compute_readability(text): 
+    total_words = 0
+    total_sentences = 0
+    total_syllables = 0
+    score = 0
+
+    words = text.split() # Get the words in an array
+    total_words = len(words) # Get total of words
+    total_sentences = count_sentences(text)
+    total_syllables = count_syllables(words)
+
+    print(total_words, "words")
+    print(total_sentences, "sentences")
+    print(total_syllables, "syllables")
+
+compute_readability(ch1text.text)
