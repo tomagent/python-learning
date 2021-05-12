@@ -21,19 +21,31 @@ def count_syllables(words):
 
     return count
 
-# Count the sylalbles in each word
+# Count the syllables in each word
 def count_syllables_in_word(word):
     count = 0
 
+    # Remove final punctuation
+    endings = ".,;!?:"
+    last_char = word[-1]
+    # Check if the last character is a punctuation
+    if last_char in endings:
+        processed_word = word[0:-1]
+    else:
+        processed_word = word
+
     # 1. If the length of the word is less than 3, then it's only one syllable 
-    if len(word) <= 3: 
+    if len(processed_word) <= 3: 
         return 1
+
+    if processed_word[-1] in "eE":
+        processed_word = processed_word[0:-1]
     
     # 2. Count number of vowels that represents syllables
     vowels = "aeiouAEIOU" # Variable that holds all the vowels
     prev_char_was_vowel = False
 
-    for char in word: # Iterate through each char of the word
+    for char in processed_word: # Iterate through each char of the word
         if char in vowels: # If the current character matches any of the characters is a vowel
             if not prev_char_was_vowel: # If the current character is a vowel and the previous wasn't
                 count = count + 1 # Count it as a syllable
@@ -41,6 +53,10 @@ def count_syllables_in_word(word):
         else:
             prev_char_was_vowel = False   
 
+    # If it encounters a y as a the last character, it counts it as syllable
+    if processed_word[-1] in "yY":
+        count = count + 1
+    
     return count    
 
 # Make the final computation of the readability
