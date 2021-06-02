@@ -4,20 +4,12 @@ from random import randint
 height = 100
 width = 100
 
-# Add random cells (live (1) or dead (0))
-def randomize(grid, width, height):
-    for i in range(0, height):
-        for j in range(0, width):
-            grid[i][j] = randint(0,1)
-
 grid_model = [0] * height # Current grid
 next_grid_model = [0] * height # Next grid
 
 for i in range(height):
     grid_model[i] = [0] * width
     next_grid_model[i] = [0] * width
-
-randomize(grid_model, width, height)
 
 # Main logic of the game
 def next_gen():

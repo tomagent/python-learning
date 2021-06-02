@@ -32,9 +32,29 @@ def setup():
 
     # Layout
     grid_view.grid(row=0, columnspan=3, padx=20, pady=20)
+    # Grid view event
+    grid_view.bind("<Button-1>", grid_handler)
     start_button.grid(row=1, column=0, sticky=W, padx=20, pady=20)
     option.grid(row=1, column=1, padx=20)
     clear_button.grid(row=1, column=2, sticky=E, padx=20, pady=20)
+
+
+# User clicks
+def grid_handler(event):
+    global grid_view, cell_size
+
+    # Get x and y position of the cell clicked
+    x = int(event.x / cell_size)
+    y = int(event.y / cell_size)
+
+    # If it's alive, zero it and color it white
+    if (game.grid_model[x][y] == 1):
+        game.grid_model[x][y] == 0
+        draw_cell(x, y, "white")
+    # If it isn't alive 
+    else:
+        game.grid_model == 1
+        draw_cell(x, y, "black")
 
 # Start event
 def start_handler(event):
