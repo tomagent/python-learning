@@ -25,10 +25,10 @@ def setup():
     clear_button.bind("<Button-1>", clear_handler)
 
     # Option menu
-    choice = StringVar(root)
-    choice.set("Choose a Pattern")
-    option = OptionMenu(root, choice, "Choose a Pattern", "glider", "glider gun", "random")
-    option.config(width=20)
+    choice = StringVar(root) # Create object to hold a string
+    choice.set("Choose a Pattern") # Initial choice in widget
+    option = OptionMenu(root, choice, "Choose a Pattern", "glider", "glider gun", "random", command=option_handler) # Instantiate object with set of options
+    option.config(width=20) # Give width
 
     # Layout
     grid_view.grid(row=0, columnspan=3, padx=20, pady=20)
@@ -38,6 +38,56 @@ def setup():
     option.grid(row=1, column=1, padx=20)
     clear_button.grid(row=1, column=2, sticky=E, padx=20, pady=20)
 
+def option_handler(event):
+    global is_running, start_button, choice
+
+    # Stop simulator from running
+    is_running = False
+    start_button.configure(text="Start")
+
+    # Get the value user selected
+    selection = choice.get()
+
+    # Test option user selected
+    if selection == "glider":
+        game.load_pattern(game.glider_pattern, 10, 10)
+
+    elif selection == "glider gun":
+        game.load_pattern(game.glider_gun_pattern, 10, 10)
+
+    elif selection == "random":
+        game.randomize(game.grid_model, game.width, game.height)
+
+    update()
+
+# Start event
+def start_handler(event):
+    global is_running, start_button
+
+    if is_running:
+        is_running = False
+        start_button.configure(text="Start")
+    else:
+        is_running = True
+        start_button.configure(text="Pause")
+        update()
+
+# Zero out cells
+def zero_cells():
+    for i in range(0, game.height):
+        for j in range(0 , game.width):
+            game.grid_model[i][j] = 0
+
+# Clear event
+def clear_handler(event):
+    global is_running, start_button
+
+    # Turn off run it and dead all the cells (zero out them)
+    is_running = False
+    zero_cells()
+
+    start_button.configure(text="Start")
+    update()
 
 # User clicks
 def grid_handler(event):
@@ -53,36 +103,8 @@ def grid_handler(event):
         draw_cell(x, y, "white")
     # If it isn't alive 
     else:
-        game.grid_model == 1
+        game.grid_model[x][y] == 1
         draw_cell(x, y, "black")
-
-# Start event
-def start_handler(event):
-    global is_running, start_button
-
-    # If it isn't running
-    if is_running:
-        is_running = False
-        start_button.configure(text="Start")
-    # If it is running
-    else:
-        is_running = True
-        start_button.configure(text="Pause")
-        update()
-
-# Clear event
-def clear_handler(event):
-    global is_running, start_button
-
-    # Turn off run it and dead all the cells (zero out them)
-    is_running = False
-    for i in range(0, game.height):
-        for j in range(0 , game.width):
-            game.grid_model[i][j] = 0
-
-    start_button.configure(text="Start")
-    update()
-    
 
 def update():
     global grid_view, root, is_running
@@ -100,7 +122,6 @@ def update():
     if (is_running):
         root.after(100, update)
 
-
 def draw_cell(row, col, color):
     global grid_view, cell_size
 
@@ -112,9 +133,6 @@ def draw_cell(row, col, color):
     
     # Draw the rectangle
     grid_view.create_rectangle(row*cell_size, col*cell_size, row*cell_size+cell_size, col*cell_size+cell_size, fill=color, outline=outline)
-
-    
-
 
 if __name__ == "__main__":
     setup()
