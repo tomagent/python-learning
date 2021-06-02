@@ -14,12 +14,15 @@ def setup():
     # Set size
     grid_view = Canvas(root, width=game.width*cell_size, height=game.height*cell_size, borderwidth=0, highlightthickness=0, bg="white")
 
-    # Add start and clear button
+    # Add start 
     start_button = Button(root, text="Start", width=12)
     # Call start_handler when clicked
     start_button.bind("<Button-1>", start_handler)
-
+    
+    # Clear button
     clear_button = Button(root, text="Clear", width=12)
+    # Call clear handler when clicked
+    clear_button.bind("<Button-1>", clear_handler)
 
     # Option menu
     choice = StringVar(root)
@@ -33,16 +36,32 @@ def setup():
     option.grid(row=1, column=1, padx=20)
     clear_button.grid(row=1, column=2, sticky=E, padx=20, pady=20)
 
+# Start event
 def start_handler(event):
     global is_running, start_button
 
+    # If it isn't running
     if is_running:
         is_running = False
         start_button.configure(text="Start")
+    # If it is running
     else:
         is_running = True
         start_button.configure(text="Pause")
         update()
+
+# Clear event
+def clear_handler(event):
+    global is_running, start_button
+
+    # Turn off run it and dead all the cells (zero out them)
+    is_running = False
+    for i in range(0, game.height):
+        for j in range(0 , game.width):
+            game.grid_model[i][j] = 0
+
+    start_button.configure(text="Start")
+    update()
     
 
 def update():
