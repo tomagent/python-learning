@@ -4,6 +4,12 @@ class Dog:
         self.age = age
         self.weight = weight
 
+    def bark(self):
+        if self.weight > 29:
+            print(self.name, 'says "WOOF WOOF"')
+        else:
+            print(self.name, 'says "woof woof"')
+
 def print_dog(dog):
     print(dog.name + "'s", "age is", dog.age, "and weight is", dog.weight)
 
