@@ -1,4 +1,3 @@
-from dog import print_dog
 from dog import Dog
 
 class ServiceDog(Dog):
@@ -11,8 +10,8 @@ class ServiceDog(Dog):
 
 if __name__ == "__main__":
     rody = ServiceDog("Rody", 8, 38, "Joseph")
-    print(f"This dog's name is {rody.name}")
+    print(f"This dog's named is {rody.name}")
     print(f"This dog's handler is {rody.handler}")
-    print_dog(rody)
+    print(rody)
     rody.bark()
     rody.walk()

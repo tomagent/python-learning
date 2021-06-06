@@ -11,13 +11,11 @@ class Dog:
             print(self.name, 'says "woof woof"')
 
     def human_years(self):
-        dog_name = self.name
-        dog_age = self.age
-        human_age = dog_age * 7
+        human_age = self.age * 7
         return human_age
 
-def print_dog(dog):
-    print(dog.name + "'s", "age is", dog.age, "and weight is", dog.weight)
+    def __str__(self):
+        return f"I'm a dog name {self.name}"
 
 if __name__ == "__main__":
     codie = Dog("Codie", 12, 38)
