@@ -56,27 +56,24 @@ class FrisbeeDog(Dog):
 class Hotel:
     def __init__(self, name):
         self.name = name
-        self.kennel_names = []
-        self.kennel_dogs = []
+        self.kennel = {}
 
     def check_in(self, dog):
         if isinstance(dog, Dog):
-            self.kennel_names.append(dog.name)
-            self.kennel_dogs.append(dog)
+            self.kennel[dog.name] = dog
             print(f"{dog.name} is checked into {self.name}")
         else:
             print(f"Sorry only Dogs are allowed in {self.name}")
 
     def check_out(self, name):
-        for i in range(0, len(self.kennel_names)):
-            if name == self.kennel_names[i]:
-                dog = self.kennel_dogs[i]
-                del self.kennel_names[i]
-                del self.kennel_dogs[i]
-                print(f"{dog.name} is checked out of {self.name}")
-                return dog
-        print(f"Sorry {name} is not boarding at {self.name}")
-        return None
+        if name in self.kennel:
+            dog = self.kennel[name]
+            print(f"{dog.name} is checked out of {self.name}")
+            del self.kennel[dog.name]
+            return dog
+        else:
+            print(f"Sorry {name} is not boarding at {self.name}")
+            return None
 
 class Cat():
     def __init__(self, name):
@@ -88,7 +85,7 @@ class Cat():
 def test_code():
     codie = Dog("Codie", 12, 38)
     jackson = Dog("Jackson", 9, 12)
-    sparky = Dog("Sparly", 2, 14)
+    sparky = Dog("Sparky", 2, 14)
     rody = ServiceDog("Rody", 8, 38, "Joseph")
     dude = FrisbeeDog("Dude", 5, 20)
     kitty = Cat("Kitty")
