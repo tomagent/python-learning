@@ -13,7 +13,12 @@ class ServiceDog(Dog):
 
     # Walk
     def walk(self):
-        print(f"{self.name} is helping its handler {self.handler} walk")
+        # Override walk from base clase
+        if self.is_working:
+            print(f"{self.name} is helping its handler {self.handler} walk")
+        else: 
+            # Dog  walk method
+            Dog.walk(self)
 
     # Bark
     def bark(self):
@@ -102,7 +107,13 @@ class Hotel:
             return dog
         else:
             print(f"Sorry {name} is not boarding at {self.name}")
-            return 
+            return None
+
+    # All dogs bark
+    def barktime(self):
+        for dog_name in self.kennel:
+            dog = self.kennel[dog_name]
+            dog.bark()
             
 # Cat object
 class Cat():
@@ -116,27 +127,15 @@ class Cat():
 def test_code():
     codie = Dog("Codie", 12, 38)
     jackson = Dog("Jackson", 9, 12)
-    sparky = Dog("Sparky", 2, 14)
     rody = ServiceDog("Rody", 8, 38, "Joseph")
+    frisbee = Frisbee("red")
     dude = FrisbeeDog("Dude", 5, 20)
-    kitty = Cat("Kitty")
+    dude.catch(frisbee)
 
-    hotel = Hotel("Doggie Hotel")
-    hotel.check_in(codie)
-    hotel.check_in(jackson)
-    hotel.check_in(rody)
-    hotel.check_in(dude)
-    hotel.check_in(kitty)
-
-    dog = hotel.check_out(codie.name)
-    print(f"Checked out {dog.name} who is {dog.age} and {dog.weight} lbs")
-    dog = hotel.check_out(jackson.name)
-    print(f"Checked out {dog.name} who is {dog.age} and {dog.weight} lbs")
-    dog = hotel.check_out(rody.name)
-    print(f"Checked out {dog.name} who is {dog.age} and {dog.weight} lbs")
-    dog = hotel.check_out(dude.name)
-    print(f"Checked out {dog.name} who is {dog.age} and {dog.weight} lbs")
-    dog = hotel.check_out(sparky.name)
+    codie.walk()
+    jackson.walk()
+    rody.walk()
+    dude.walk()
 
 if __name__ == "__main__":
     test_code()
