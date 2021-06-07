@@ -4,7 +4,7 @@ class ServiceDog(Dog):
     def __init__(self, name, age, weight, handler):
         Dog.__init__(self, name, age, weight)
         self.handler = handler
-        self.is_working = False # Define attribute (not necessary mirror the parameter)
+        self.is_working = False # Define attribute (not necessary it needs to mirror the parameter)
 
     def walk(self):
         print(f"{self.name} is helping its handler {self.handler} walk")
@@ -53,19 +53,62 @@ class FrisbeeDog(Dog):
             str = f"{str} and I have a frisbee"
         return str
 
+class Hotel:
+    def __init__(self, name):
+        self.name = name
+        self.kennel_names = []
+        self.kennel_dogs = []
+
+    def check_in(self, dog):
+        if isinstance(dog, Dog):
+            self.kennel_names.append(dog.name)
+            self.kennel_dogs.append(dog)
+            print(f"{dog.name} is checked into {self.name}")
+        else:
+            print(f"Sorry only Dogs are allowed in {self.name}")
+
+    def check_out(self, name):
+        for i in range(0, len(self.kennel_names)):
+            if name == self.kennel_names[i]:
+                dog = self.kennel_dogs[i]
+                del self.kennel_names[i]
+                del self.kennel_dogs[i]
+                print(f"{dog.name} is checked out of {self.name}")
+                return dog
+        print(f"Sorry {name} is not boarding at {self.name}")
+        return None
+
+class Cat():
+    def __init__(self, name):
+        self.name = name
+
+    def meow(self):
+        print(f"{self.name} says Meow")
 
 def test_code():
+    codie = Dog("Codie", 12, 38)
+    jackson = Dog("Jackson", 9, 12)
+    sparky = Dog("Sparly", 2, 14)
+    rody = ServiceDog("Rody", 8, 38, "Joseph")
     dude = FrisbeeDog("Dude", 5, 20)
-    blue_frisbee = Frisbee("blue")
+    kitty = Cat("Kitty")
 
-    print(dude)
-    dude.bark()
-    dude.catch(blue_frisbee)
-    dude.bark()
-    print(dude)
-    frisbee = dude.give()
-    print(frisbee)
-    print(dude)
+    hotel = Hotel("Doggie Hotel")
+    hotel.check_in(codie)
+    hotel.check_in(jackson)
+    hotel.check_in(rody)
+    hotel.check_in(dude)
+    hotel.check_in(kitty)
+
+    dog = hotel.check_out(codie.name)
+    print(f"Checked out {dog.name} who is {dog.age} and {dog.weight} lbs")
+    dog = hotel.check_out(jackson.name)
+    print(f"Checked out {dog.name} who is {dog.age} and {dog.weight} lbs")
+    dog = hotel.check_out(rody.name)
+    print(f"Checked out {dog.name} who is {dog.age} and {dog.weight} lbs")
+    dog = hotel.check_out(dude.name)
+    print(f"Checked out {dog.name} who is {dog.age} and {dog.weight} lbs")
+    dog = hotel.check_out(sparky.name)
 
 if __name__ == "__main__":
     test_code()
