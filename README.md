@@ -1,3 +1,3 @@
-# python-tutorial
+# python
 
-This repo is for the book Head First Learn To Code
+This repo is for practice for books, puzzles and some leetcode :)
